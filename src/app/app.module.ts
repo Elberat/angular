@@ -10,10 +10,12 @@ import { CoursesListItemComponent } from './courses-list-item/courses-list-item.
 import { LogoComponent } from './logo/logo.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SearchFormComponent } from './search-form/search-form.component';
-import { AddCourseBtnComponent } from './add-course-btn/add-course-btn.component';
 import { LoadMoreBtnComponent } from './load-more-btn/load-more-btn.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteButtonComponent } from './courses-list-item/delete-button/delete-button.component';
+import { CourseModule } from './course/course.module';
+import { CourseComponent } from './course/course.component';
+// import { AddCourseBtnComponent } from './course/add-course-btn/add-course-btn.component';
 
 @NgModule({
   declarations: [
@@ -25,11 +27,12 @@ import { DeleteButtonComponent } from './courses-list-item/delete-button/delete-
     FooterComponent,
     BreadcrumbsComponent,
     SearchFormComponent,
-    AddCourseBtnComponent,
+    // AddCourseBtnComponent,
     LoadMoreBtnComponent,
     DeleteButtonComponent,
+    CourseComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, CourseModule],
   providers: [],
   bootstrap: [AppComponent],
 })
