@@ -1,0 +1,14 @@
+.add-btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.add-course-btn {
+  height: 36px;
+  width: 111px;
+  border-radius: 3px;
+  background: #009ecc;
+  color: white;
+  border: none;
+}

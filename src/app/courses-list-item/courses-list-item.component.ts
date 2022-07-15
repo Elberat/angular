@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ICourse } from '../app-interfaces';
 
 @Component({
   selector: 'app-courses-list-item',
   templateUrl: './courses-list-item.component.html',
-  styleUrls: ['./courses-list-item.component.css']
+  styleUrls: ['./courses-list-item.component.css'],
 })
-export class CoursesListItemComponent implements OnInit {
+export class CoursesListItemComponent {
+  @Input()
+  public course!: ICourse;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  handleDelete(id: number) {
+    console.log(`delete ${id}`);
   }
-
+  handleEdit(id: number) {
+    console.log(`edit ${id}`);
+  }
 }

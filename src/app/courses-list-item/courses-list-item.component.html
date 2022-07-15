@@ -1,1 +1,21 @@
-<p>courses-list-item works!</p>
+<div class="item-wrapper">
+    <div class="heading">
+        <h2 class="course-name">
+            {{course.id}} {{course.title}}
+        </h2>
+        <div class="date">
+            <p>{{course.duration | date: 'hh:mm'}} min</p>
+            <p>{{course.creationDate}}</p>
+        </div>
+    </div>
+    <div class="course-bottom">
+        <p class="course-description">
+            {{course.description}}
+        </p>
+        <div class="course-btns">
+            <button class="btn" (click)="handleEdit(course.id)">Edit</button>
+            <!-- <button class="btn" (click)="handleDelete(course.id)">Delete</button> -->
+            <app-delete-button [id]="course.id" (handleDeleteEvent)="handleDelete($event)"></app-delete-button>
+        </div>
+    </div>
+</div>

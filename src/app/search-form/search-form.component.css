@@ -1,0 +1,25 @@
+.search-wrapper {
+  display: flex;
+  align-items: center;
+}
+.search-input {
+  line-height: 18px;
+  color: #acafbf;
+  border: 1px solid #acafbf;
+  border-radius: 3px;
+  font-size: 14px;
+  text-transform: none;
+  text-align: left;
+  height: 36px;
+  width: 216px;
+  padding: 9px;
+}
+.search-button {
+  margin-left: 12px;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  background: #67a300;
+  height: 36px;
+  width: 73px;
+}

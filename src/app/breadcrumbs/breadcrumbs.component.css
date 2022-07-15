@@ -1,0 +1,14 @@
+.breadcrumbs-wrapper {
+  background: white;
+  height: 60px;
+  padding: 20px 0;
+}
+.breadcrumbs-item {
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #464a5a;
+  font-size: 14px;
+  text-transform: none;
+  text-align: left;
+  font-weight: 700;
+}

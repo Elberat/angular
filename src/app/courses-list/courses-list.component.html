@@ -1,1 +1,10 @@
-<p>courses-list works!</p>
+<div class="course-list">
+    <div class="container">
+        <div class="course-list-wrapper">
+            <app-courses-list-item *ngFor="let course of courses; index as i; even as isEven" [course]="course">
+            </app-courses-list-item>
+        </div>
+    </div>
+</div>
+
+<app-load-more-btn></app-load-more-btn>
