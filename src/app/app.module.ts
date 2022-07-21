@@ -13,9 +13,8 @@ import { SearchFormComponent } from './search-form/search-form.component';
 import { LoadMoreBtnComponent } from './load-more-btn/load-more-btn.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteButtonComponent } from './courses-list-item/delete-button/delete-button.component';
-import { CourseModule } from './course/course.module';
-import { CourseComponent } from './course/course.component';
-// import { AddCourseBtnComponent } from './course/add-course-btn/add-course-btn.component';
+import { AddCourseBtnComponent } from './add-course-btn/add-course-btn.component';
+import { ChangeBorderDirective } from './directives/changeBorderDirective';
 
 @NgModule({
   declarations: [
@@ -27,12 +26,12 @@ import { CourseComponent } from './course/course.component';
     FooterComponent,
     BreadcrumbsComponent,
     SearchFormComponent,
-    // AddCourseBtnComponent,
+    AddCourseBtnComponent,
     LoadMoreBtnComponent,
     DeleteButtonComponent,
-    CourseComponent,
+    ChangeBorderDirective,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, CourseModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

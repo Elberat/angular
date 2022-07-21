@@ -14,7 +14,7 @@ export class CoursesListComponent implements OnInit {
       {
         id: 1,
         title: 'Angular: The Complete Guide',
-        creationDate: '10/10/2020',
+        creationDate: 'Jan 01 2021',
         duration: 120,
         description:
           'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
@@ -22,7 +22,7 @@ export class CoursesListComponent implements OnInit {
       {
         id: 2,
         title: 'React: The Complete Guide',
-        creationDate: '20/01/2022',
+        creationDate: 'Now 23 2012',
         duration: 120,
         description:
           'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
@@ -30,7 +30,7 @@ export class CoursesListComponent implements OnInit {
       {
         id: 3,
         title: 'Vue: The Complete Guide',
-        creationDate: '15/05/2015',
+        creationDate: 'Sep 09 2020',
         duration: 120,
         description:
           'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
@@ -38,7 +38,7 @@ export class CoursesListComponent implements OnInit {
       {
         id: 4,
         title: 'Angular: The Complete Guide',
-        creationDate: '10/10/2020',
+        creationDate: 'Feb 28 2023',
         duration: 120,
         description:
           'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
@@ -46,7 +46,7 @@ export class CoursesListComponent implements OnInit {
       {
         id: 5,
         title: 'React: The Complete Guide',
-        creationDate: '20/01/2022',
+        creationDate: 'Mar 08 2025',
         duration: 120,
         description:
           'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
@@ -54,7 +54,7 @@ export class CoursesListComponent implements OnInit {
       {
         id: 6,
         title: 'Vue: The Complete Guide',
-        creationDate: '15/05/2015',
+        creationDate: 'Apr 01 2019',
         duration: 120,
         description:
           'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',

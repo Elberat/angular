@@ -1,4 +1,4 @@
-<div class="item-wrapper">
+<div class="item-wrapper" changeBorder [changeBorderDate]="course.creationDate">
     <div class="heading">
         <h2 class="course-name">
             {{course.id}} {{course.title}}
@@ -14,7 +14,6 @@
         </p>
         <div class="course-btns">
             <button class="btn" (click)="handleEdit(course.id)">Edit</button>
-            <!-- <button class="btn" (click)="handleDelete(course.id)">Delete</button> -->
             <app-delete-button [id]="course.id" (handleDeleteEvent)="handleDelete($event)"></app-delete-button>
         </div>
     </div>
