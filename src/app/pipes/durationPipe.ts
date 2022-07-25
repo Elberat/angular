@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'duration',
 })
 export class DurationPipe implements PipeTransform {
-  ngOnInit() {}
   transform(value: number) {
     if (value < 60) return `${value}min`;
     if (value % 60 === 0) return `${value / 60}h`;

@@ -1,4 +1,4 @@
-<div class="item-wrapper" changeBorder [changeBorderDate]="course.creationDate">
+<div class="item-wrapper" changeBorder [changeBorderDate]="course.creationDate" (click)="getItem(course.id)">
     <div class="heading">
         <h2 class="course-name">
             {{course.id}} {{course.title | uppercase}}

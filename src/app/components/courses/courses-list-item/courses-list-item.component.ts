@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ICourse } from 'src/app/app-interfaces';
+import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
   selector: 'app-courses-list-item',
@@ -10,10 +11,16 @@ export class CoursesListItemComponent {
   @Input()
   public course!: ICourse;
 
-  handleDelete(id: number) {
+  constructor(private CoursesService: CoursesService) {}
+
+  public handleDelete(id: number) {
     console.log(`delete ${id}`);
   }
-  handleEdit(id: number) {
+  public handleEdit(id: number) {
     console.log(`edit ${id}`);
+  }
+
+  public getItem(id: number) {
+    console.log(this.CoursesService.getItemById(id));
   }
 }

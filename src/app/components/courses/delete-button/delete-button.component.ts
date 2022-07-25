@@ -13,6 +13,7 @@ export class DeleteButtonComponent {
   handleDeleteEvent = new EventEmitter<number>();
 
   handleDelete(id: number) {
-    this.handleDeleteEvent.emit(id);
+    const answ = confirm('delete this item?');
+    answ ? this.handleDeleteEvent.emit(id) : null;
   }
 }

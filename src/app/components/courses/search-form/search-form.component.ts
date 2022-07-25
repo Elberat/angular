@@ -10,5 +10,6 @@ export class SearchFormComponent {
 
   public handleClick() {
     console.log(this.searchValue);
+    this.searchValue = '';
   }
 }
