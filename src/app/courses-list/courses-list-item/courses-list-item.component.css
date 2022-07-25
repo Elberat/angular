@@ -65,3 +65,7 @@
   border-radius: 3px;
   background: #009ecc;
 }
+
+.item-svg {
+  fill: orange;
+}
