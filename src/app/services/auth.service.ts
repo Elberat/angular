@@ -1,16 +1,30 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthenticationService {
-  login(login: string, password: string) {}
+  public isAuth: boolean = false;
 
-  logOut() {}
-
-  isAthenticated(): boolean {
-    return true;
+  public login(
+    email: string | null | undefined,
+    password: string | null | undefined
+  ): void {
+    localStorage.setItem('user', JSON.stringify({ email, password }));
+    this.isAuth = true;
   }
 
-  getUserInfo(): string {
-    return 'info';
+  public logOut(): void {
+    localStorage.removeItem('user');
+    this.isAuth = false;
   }
+
+  public isAthenticated(): boolean {
+    return this.isAuth;
+  }
+
+  //   getUserInfo(): string {
+  //     let userInfo = JSON.parse(localStorage.getItem('user'));
+  //     return userInfo.email;
+  //   }
 }

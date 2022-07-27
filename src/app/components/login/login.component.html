@@ -1,0 +1,12 @@
+<div class="modal-wrapper">
+    <div class="modal-login">
+        <h3>login</h3>
+        <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+            <label for="">E-mail:</label>
+            <input type="text" placeholder="Enter e-mail" formControlName="email">
+            <label for="">Password:</label>
+            <input type="passwprd" placeholder="Enter password" formControlName="password">
+            <button class="login-button" type="submit">Login</button>
+        </form>
+    </div>
+</div>

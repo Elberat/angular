@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICourse } from 'src/app/app-interfaces';
-import { FilterPipe } from '../../../pipes/filterPipe';
+import { ICourse } from 'src/app/types/courses';
 import { CoursesService } from 'src/app/services/courses.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { CoursesService } from 'src/app/services/courses.service';
 })
 export class CoursesListComponent implements OnInit {
   public courses: ICourse[] = [];
-  filterPipe = new FilterPipe();
 
   constructor(private CoursesService: CoursesService) {}
 
