@@ -15,12 +15,8 @@ export class LoginComponent {
   ) {}
 
   form = new FormGroup({
-    email: new FormControl<string | null | undefined>('', [
-      Validators.required,
-    ]),
-    password: new FormControl<string | null | undefined>('', [
-      Validators.required,
-    ]),
+    email: new FormControl<string>('', { nonNullable: true }),
+    password: new FormControl<string>('', { nonNullable: true }),
   });
 
   submit() {

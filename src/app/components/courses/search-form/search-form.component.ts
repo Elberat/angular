@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-form',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-form.component.css'],
 })
 export class SearchFormComponent {
-  public searchValue: string = '';
+  public inputValue: string = '';
 
-  public handleClick() {
-    console.log(this.searchValue);
-    this.searchValue = '';
+  @Output()
+  public inputValueEvent = new EventEmitter<string>();
+
+  public handleClick(value: string): void {
+    this.inputValueEvent.emit(value);
   }
 }

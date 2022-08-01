@@ -14,6 +14,8 @@ import { DurationPipe } from 'src/app/pipes/duration.pipe';
 import { ChangeBorderDirective } from 'src/app/directives/changeBorder.directive';
 import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateCoursePageComponent } from './create-course-page/create-course-page.component';
+import { FilterPipe } from 'src/app/pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ChangeBorderDirective,
     DurationPipe,
     OrderByPipe,
+    CreateCoursePageComponent,
+    FilterPipe,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   exports: [CoursesPageComponent],

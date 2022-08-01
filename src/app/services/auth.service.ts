@@ -6,10 +6,7 @@ import { Injectable } from '@angular/core';
 export class AuthenticationService {
   public isAuth: boolean = false;
 
-  public login(
-    email: string | null | undefined,
-    password: string | null | undefined
-  ): void {
+  public login(email?: string, password?: string): void {
     localStorage.setItem('user', JSON.stringify({ email, password }));
     this.isAuth = true;
   }

@@ -20,7 +20,6 @@ export class ChangeBorderDirective implements OnInit {
         'border',
         '2px solid blue'
       );
-      console.log(courseDate);
     } else {
       const timeDiff = Math.abs(now.getTime() - courseDate.getTime());
       const diffDays = Math.ceil(timeDiff / MILLISECONDS_IN_DAY);

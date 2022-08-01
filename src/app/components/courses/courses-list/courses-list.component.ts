@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ICourse } from 'src/app/types/courses';
 import { CoursesService } from 'src/app/services/courses.service';
 
@@ -9,6 +9,7 @@ import { CoursesService } from 'src/app/services/courses.service';
 })
 export class CoursesListComponent implements OnInit {
   public courses: ICourse[] = [];
+  public searchValue: string = '';
 
   constructor(private CoursesService: CoursesService) {}
 
@@ -18,5 +19,9 @@ export class CoursesListComponent implements OnInit {
 
   private getCourses(): void {
     this.courses = this.CoursesService.getList();
+  }
+
+  public changeSearchString(inputValue: string): void {
+    this.searchValue = inputValue;
   }
 }
