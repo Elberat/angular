@@ -1,25 +1,42 @@
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CoursesService } from 'src/app/services/courses.service';
+import { ICourse } from 'src/app/types/courses';
 
 @Component({
   selector: 'app-create-course-page',
   templateUrl: './create-course-page.component.html',
   styleUrls: ['./create-course-page.component.css'],
+  providers: [DatePipe, TitleCasePipe],
 })
-export class CreateCoursePageComponent {
-  constructor(private router: Router) {}
+export class CreateCoursePageComponent implements OnInit {
+  courseToEdit: ICourse = {
+    id: Date.now(),
+    title: '',
+    author: '',
+    description: '',
+    duration: 0,
+    creationDate: new Date(),
+    topRated: true,
+  };
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private coursesService: CoursesService
+  ) {}
 
-  form = new FormGroup({
-    title: new FormControl<string>('', { nonNullable: true }),
-    description: new FormControl<string>('', { nonNullable: true }),
-    duration: new FormControl<number>(0, { nonNullable: true }),
-    date: new FormControl<Date>(new Date(), { nonNullable: true }),
-    author: new FormControl<string>('', { nonNullable: true }),
-  });
+  ngOnInit(): void {
+    const id = +this.activatedRoute.snapshot.params['id'];
+    this.courseToEdit = this.coursesService.getItemById(id);
+    console.log(this.courseToEdit);
+  }
 
   submit() {
-    console.log(this.form.value);
+    console.log(this.courseToEdit);
+    this.coursesService.updateItem(this.courseToEdit);
+
     this.router.navigate(['']);
   }
   cancel() {

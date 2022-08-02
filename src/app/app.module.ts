@@ -10,9 +10,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { CoursesModule } from './components/courses/courses.module';
 import { LoginModule } from './components/login/login.module';
+import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LogoComponent, FooterComponent],
+  declarations: [AppComponent, HeaderComponent, LogoComponent, FooterComponent, NotFoundPageComponent],
   imports: [BrowserModule, AppRoutingModule, CoursesModule, LoginModule],
   bootstrap: [AppComponent],
 })

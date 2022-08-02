@@ -14,6 +14,7 @@ export class CoursesService {
       topRated: true,
       description:
         'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+      author: 'vladilen minin',
     },
     {
       id: 2,
@@ -23,6 +24,7 @@ export class CoursesService {
       topRated: true,
       description:
         'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+      author: 'vladilen minin',
     },
     {
       id: 3,
@@ -32,6 +34,7 @@ export class CoursesService {
       topRated: false,
       description:
         'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+      author: 'vladilen minin',
     },
     {
       id: 4,
@@ -41,6 +44,7 @@ export class CoursesService {
       topRated: true,
       description:
         'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+      author: 'vladilen minin',
     },
     {
       id: 5,
@@ -50,6 +54,7 @@ export class CoursesService {
       topRated: true,
       description:
         'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+      author: 'vladilen minin',
     },
     {
       id: 6,
@@ -59,6 +64,7 @@ export class CoursesService {
       topRated: false,
       description:
         'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+      author: 'vladilen minin',
     },
   ];
 
@@ -66,15 +72,30 @@ export class CoursesService {
     return this.coursesList;
   }
 
-  public getItemById(id: number): ICourse | undefined {
-    return this.coursesList.find((course) => course.id === id);
+  public getItemById(id: number): ICourse {
+    const itemToReturn = this.coursesList.find((course) => course.id === id);
+    return itemToReturn
+      ? itemToReturn
+      : {
+          id: Date.now(),
+          title: '',
+          author: '',
+          description: '',
+          duration: 0,
+          creationDate: new Date(),
+          topRated: true,
+        };
   }
 
   public removeItem(id: number): void {
     this.coursesList = this.coursesList.filter((course) => course.id !== id);
   }
 
-  public updateItem(): void {}
+  public updateItem(item: ICourse): void {
+    // this.coursesList[item.id + 1] = item;
+  }
 
-  public createCourse(): void {}
+  public createCourse(item: ICourse): void {
+    this.coursesList.push(item);
+  }
 }

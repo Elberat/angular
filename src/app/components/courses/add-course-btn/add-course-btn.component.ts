@@ -10,6 +10,6 @@ export class AddCourseBtnComponent {
   constructor(private router: Router) {}
 
   public navigateToCreate(): void {
-    this.router.navigate(['/create-course']);
+    this.router.navigate(['./new']);
   }
 }

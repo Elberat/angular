@@ -1,20 +1,25 @@
 <div class="modal-wrapper">
     <div class="modal-add">
         <h3>New Course</h3>
-        <form class="add-form" [formGroup]="form" (ngSubmit)="submit()">
+        <form class="add-form">
             <label for="">Title:</label>
-            <input type="text" placeholder="Enter title" formControlName="title">
+            <input type="text" placeholder="Enter title" [ngModelOptions]="{standalone: true}" [(ngModel)]="
+                this.courseToEdit.title">
             <label for="">Description:</label>
-            <input type="text" placeholder="Enter description" formControlName="description">
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.description" type="text"
+                placeholder="Enter description">
             <label for="">Duration:</label>
-            <input type="number" placeholder="Minutes" formControlName="duration">
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.duration" type="number"
+                placeholder="Minutes">
             <label for="">Date:</label>
-            <input type="date" placeholder="date" formControlName="date">
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.creationDate" type="date"
+                placeholder="date">
             <label for="">Authors:</label>
-            <input type="text" placeholder="Enter Author" formControlName="author">
+            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.author" type="text"
+                placeholder="Enter Author">
             <div class="button-wrapper">
                 <button class="cancel-button" type="button" (click)="cancel()">Cancel</button>
-                <button class="add-button" type="submit">Save</button>
+                <button class="add-button" (click)="submit()" type="submit">Save</button>
             </div>
         </form>
     </div>

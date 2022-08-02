@@ -2,7 +2,8 @@
     <app-search-form (inputValueEvent)="changeSearchString($event)"></app-search-form>
     <div class="container">
         <div class="course-list-wrapper" *ngIf="courses.length; else other_content">
-            <app-courses-list-item *ngFor="let course of courses | orderBy| filter:searchValue " [course]="course">
+            <app-courses-list-item *ngFor="let course of courses | orderBy| filter:searchValue " [course]="course"
+                [deleteCourse]="deleteCourse">
             </app-courses-list-item>
         </div>
     </div>

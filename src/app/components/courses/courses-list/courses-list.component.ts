@@ -17,11 +17,17 @@ export class CoursesListComponent implements OnInit {
     this.getCourses();
   }
 
-  private getCourses(): void {
+  public getCourses(): void {
     this.courses = this.CoursesService.getList();
+    console.log(this.courses);
   }
 
   public changeSearchString(inputValue: string): void {
     this.searchValue = inputValue;
+  }
+
+  public deleteCourse(courseId: number): void {
+    this.CoursesService.removeItem(courseId);
+    this.getCourses();
   }
 }

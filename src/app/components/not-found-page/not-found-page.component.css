@@ -1,0 +1,7 @@
+.not-found-wrapper {
+  padding: 40vh 0;
+}
+
+.not-found-wrapper > p {
+  text-align: center;
+}
