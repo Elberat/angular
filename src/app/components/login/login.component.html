@@ -3,9 +3,9 @@
         <h3>login</h3>
         <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
             <label for="">E-mail:</label>
-            <input type="text" placeholder="Enter e-mail" formControlName="email">
+            <input type="text" placeholder="Enter e-mail" formControlName="email" required>
             <label for="">Password:</label>
-            <input type="passwprd" placeholder="Enter password" formControlName="password">
+            <input type="passwprd" placeholder="Enter password" formControlName="password" required>
             <button class="login-button" type="submit">Login</button>
         </form>
     </div>

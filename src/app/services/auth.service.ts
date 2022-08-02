@@ -1,27 +1,60 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { LocalStorageService } from './localStorage.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  public isAuth: boolean = false;
+  private isAuthenticated: boolean = false;
+  private errMessage: any;
 
-  public login(email?: string, password?: string): void {
-    localStorage.setItem('user', JSON.stringify({ email, password }));
-    this.isAuth = true;
+  constructor(
+    private userService: UserService,
+    private localStorageService: LocalStorageService,
+    private router: Router,
+    private http: HttpClient
+  ) {
+    if (this.localStorageService.getItem()) {
+      this.isAuthenticated = true;
+    }
+  }
+
+  public logIn(login: string | undefined, password: string | undefined) {
+    this.http
+      .post(`http://localhost:3004/auth/login`, {
+        login,
+        password,
+      })
+      .subscribe({
+        next: (userData) => {
+          this.localStorageService.setItem(JSON.stringify(userData));
+          this.userService.fetchUser();
+          this.isAuthenticated = true;
+          console.log('Logged In!');
+          this.router.navigate(['']);
+        },
+        error: (err) => {
+          console.error(err);
+          this.errMessage = true;
+        },
+      });
   }
 
   public logOut(): void {
-    localStorage.removeItem('user');
-    this.isAuth = false;
+    this.isAuthenticated = false;
+    this.localStorageService.removeItem();
+    console.log('Logged Out!');
+    this.router.navigate(['/login']);
   }
 
-  public isAthenticated(): boolean {
-    return this.isAuth;
+  get isAuth() {
+    return this.isAuthenticated;
   }
 
-  //   getUserInfo(): string {
-  //     let userInfo = JSON.parse(localStorage.getItem('user'));
-  //     return userInfo.email;
-  //   }
+  get isErr() {
+    return this.errMessage;
+  }
 }

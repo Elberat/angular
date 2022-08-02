@@ -1,75 +1,89 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { delay, Observable, retry, tap } from 'rxjs';
 import { ICourse } from '../types/courses';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
-  private coursesList: ICourse[] = [
-    {
-      id: 1,
-      title: 'Angular: The Complete Guide',
-      creationDate: new Date(2022, 7, 9),
-      duration: 120,
-      topRated: true,
-      description:
-        'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-      author: 'vladilen minin',
-    },
-    {
-      id: 2,
-      title: 'React: The Complete Guide',
-      creationDate: new Date(2022, 12, 8),
-      duration: 100,
-      topRated: true,
-      description:
-        'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-      author: 'vladilen minin',
-    },
-    {
-      id: 3,
-      title: 'Vue: The Complete Guide',
-      creationDate: new Date(2018, 7, 12),
-      duration: 60,
-      topRated: false,
-      description:
-        'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-      author: 'vladilen minin',
-    },
-    {
-      id: 4,
-      title: 'Angular: The Complete Guide',
-      creationDate: new Date(2025, 11, 23),
-      duration: 40,
-      topRated: true,
-      description:
-        'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-      author: 'vladilen minin',
-    },
-    {
-      id: 5,
-      title: 'React: The Complete Guide',
-      creationDate: new Date(2025, 9, 9),
-      duration: 10,
-      topRated: true,
-      description:
-        'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-      author: 'vladilen minin',
-    },
-    {
-      id: 6,
-      title: 'Vue: The Complete Guide',
-      creationDate: new Date(2022, 6, 6),
-      duration: 300,
-      topRated: false,
-      description:
-        'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-      author: 'vladilen minin',
-    },
-  ];
+  //   private coursesList: ICourse[] = [
+  //     {
+  //       id: 1,
+  //       title: 'Angular: The Complete Guide',
+  //       creationDate: new Date(2022, 7, 9),
+  //       duration: 120,
+  //       topRated: true,
+  //       description:
+  //         'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+  //       author: 'vladilen minin',
+  //     },
+  //     {
+  //       id: 2,
+  //       title: 'React: The Complete Guide',
+  //       creationDate: new Date(2022, 12, 8),
+  //       duration: 100,
+  //       topRated: true,
+  //       description:
+  //         'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+  //       author: 'vladilen minin',
+  //     },
+  //     {
+  //       id: 3,
+  //       title: 'Vue: The Complete Guide',
+  //       creationDate: new Date(2018, 7, 12),
+  //       duration: 60,
+  //       topRated: false,
+  //       description:
+  //         'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+  //       author: 'vladilen minin',
+  //     },
+  //     {
+  //       id: 4,
+  //       title: 'Angular: The Complete Guide',
+  //       creationDate: new Date(2025, 11, 23),
+  //       duration: 40,
+  //       topRated: true,
+  //       description:
+  //         'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+  //       author: 'vladilen minin',
+  //     },
+  //     {
+  //       id: 5,
+  //       title: 'React: The Complete Guide',
+  //       creationDate: new Date(2025, 9, 9),
+  //       duration: 10,
+  //       topRated: true,
+  //       description:
+  //         'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+  //       author: 'vladilen minin',
+  //     },
+  //     {
+  //       id: 6,
+  //       title: 'Vue: The Complete Guide',
+  //       creationDate: new Date(2022, 6, 6),
+  //       duration: 300,
+  //       topRated: false,
+  //       description:
+  //         'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
+  //       author: 'vladilen minin',
+  //     },
+  //   ];
 
-  public getList(): ICourse[] {
-    return this.coursesList;
+  private coursesList: ICourse[] = [];
+
+  //   public getList(): ICourse[] {
+  //     return this.coursesList;
+  //   }
+  constructor(private http: HttpClient) {}
+
+  public getList(start: number, count: number): Observable<ICourse[]> {
+    return this.http.get<ICourse[]>('http://localhost:3004/courses', {
+      params: {
+        start,
+        count,
+      },
+    });
   }
 
   public getItemById(id: number): ICourse {

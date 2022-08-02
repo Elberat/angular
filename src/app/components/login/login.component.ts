@@ -21,12 +21,10 @@ export class LoginComponent {
 
   submit() {
     console.log(this.form.value);
-    this.authService.login(this.form.value.email, this.form.value.password);
-    if (this.authService.isAthenticated()) {
+    this.authService.logIn(this.form.value.email, this.form.value.password);
+    if (this.authService.isAuth) {
       console.log('logged in');
       this.router.navigate(['/']);
-    } else {
-      console.log('not logged in');
     }
   }
 }

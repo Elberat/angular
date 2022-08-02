@@ -11,10 +11,23 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursesModule } from './components/courses/courses.module';
 import { LoginModule } from './components/login/login.module';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, LogoComponent, FooterComponent, NotFoundPageComponent],
-  imports: [BrowserModule, AppRoutingModule, CoursesModule, LoginModule],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    LogoComponent,
+    FooterComponent,
+    NotFoundPageComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    CoursesModule,
+    LoginModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
