@@ -3,9 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
-import { ICourse, IAuthor } from 'src/app/types/courses';
+import { ICourse, IAuthor, ICourseAuthor } from 'src/app/types/courses';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { AuthorService } from 'src/app/services/author.service';
 
 @Component({
   selector: 'app-create-course-page',
@@ -17,13 +19,15 @@ export class CreateCoursePageComponent implements OnInit {
   private courseId: number;
   public formGroup: FormGroup;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  public authors$: Observable<IAuthor[]>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private coursesService: CoursesService,
     private datePipe: DatePipe,
-    private titleCasePipe: TitleCasePipe
+    private titleCasePipe: TitleCasePipe,
+    private authorService: AuthorService
   ) {
     this.formGroup = new FormGroup({
       name: new FormControl('', [
@@ -63,6 +67,12 @@ export class CreateCoursePageComponent implements OnInit {
         });
       });
     }
+
+    this.getAuthros();
+  }
+  private getAuthros(): void {
+    this.authors$ = this.authorService.getAuthors();
+    // this.authorControls.push(new FormControl(this.authors$));
   }
 
   get authorControls() {
@@ -92,9 +102,10 @@ export class CreateCoursePageComponent implements OnInit {
   public addAuthor(event: MatChipInputEvent) {
     if (!event.value) return;
     const userNameArr: string[] = event.value.split(/[ ,]+/);
-    const author: IAuthor = {
+    const author: ICourseAuthor = {
       id: Date.now(),
-      name: userNameArr[0],
+      firstName: userNameArr[0],
+      lastName: userNameArr[1],
     };
     this.authorControls.push(new FormControl(author));
     event.chipInput!.clear();

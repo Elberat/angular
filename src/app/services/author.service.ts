@@ -9,13 +9,9 @@ import { IAuthor } from '../types/courses';
 export class AuthorService {
   constructor(private http: HttpClient) {}
 
-  public getAuthors(searchValue: string): Observable<IAuthor[]> {
+  public getAuthors(): Observable<IAuthor[]> {
     return this.http.get<IAuthor[]>('http://localhost:3004/authors', {
-      params: new HttpParams({
-        fromObject: {
-          textFragment: searchValue,
-        },
-      }),
+      params: new HttpParams({}),
     });
   }
 }

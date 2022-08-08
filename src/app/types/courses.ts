@@ -6,10 +6,16 @@ export interface ICourse {
   isTopRated: boolean;
   description: string;
   length: number;
-  authors: IAuthor[];
+  authors: ICourseAuthor[];
 }
 
 export interface IAuthor {
   id: number;
   name: string;
+}
+
+export interface ICourseAuthor {
+  id: number;
+  firstName: string;
+  lastName: string;
 }

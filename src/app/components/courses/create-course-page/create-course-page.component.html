@@ -53,9 +53,8 @@
                     </button>
                 </mat-chip>
                 <input type="text" matInput (blur)="checkAuthorsState(chipList)" formControlName="authorsInput"
-                    [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
-                    (matChipInputTokenEnd)="addAuthor($event)" />
+                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="addAuthor($event)" />
             </mat-chip-list>
             <mat-error> Should be at least 1 author </mat-error>
 
