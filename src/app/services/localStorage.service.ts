@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  public getItem(): string | null {
-    return localStorage.getItem('user');
+  public getToken(): string | null {
+    return localStorage.getItem('token');
   }
-  public setItem(value: string): void {
-    localStorage.setItem('user', value);
+  public setToken(value: string): void {
+    localStorage.setItem('token', value);
   }
-  public removeItem(): void {
-    localStorage.removeItem('user');
+  public removeToken(): void {
+    localStorage.removeItem('token');
   }
 }

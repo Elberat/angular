@@ -7,11 +7,11 @@ const FRESH_COURSE_PERIOD = 14; // 14 days
   selector: '[changeBorder]',
 })
 export class ChangeBorderDirective implements OnInit {
-  @Input('changeBorderDate') public creationDate!: Date;
+  @Input('changeBorderDate') public date!: string;
   constructor(private element: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
-    const courseDate = new Date(this.creationDate);
+    const courseDate = new Date(this.date);
     const now = new Date();
 
     if (courseDate > now) {

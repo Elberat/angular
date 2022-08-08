@@ -9,7 +9,7 @@ export class FilterPipe implements PipeTransform {
     console.log(searchValue, courses);
     return courses.filter(
       (course: ICourse) =>
-        course.title.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
+        course.name.toLowerCase().indexOf(searchValue.toLowerCase()) >= 0
     );
   }
 }

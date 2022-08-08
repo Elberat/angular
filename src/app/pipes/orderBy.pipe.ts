@@ -7,7 +7,7 @@ import { ICourse } from '../types/courses';
 export class OrderByPipe {
   transform(courses: ICourse[]): ICourse[] {
     return courses.sort((a: ICourse, b: ICourse) => {
-      return +new Date(a.creationDate) - +new Date(b.creationDate);
+      return +new Date(a.date) - +new Date(b.date);
     });
   }
 }

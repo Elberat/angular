@@ -9,14 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./courses-list-item.component.css'],
 })
 export class CoursesListItemComponent {
-  @Input() public deleteCourse: Function;
   @Input() public course!: ICourse;
+
+  @Output()
+  public deleteCourseEvent = new EventEmitter<number>();
 
   constructor(private CoursesService: CoursesService) {}
 
-  public handleDelete(id: number) {
-    console.log(`delete ${id}`);
-    this.deleteCourse(id);
+  public handleClick(id: number): void {
+    this.deleteCourseEvent.emit(id);
   }
 
   public getItem(id: number) {

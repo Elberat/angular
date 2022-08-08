@@ -11,7 +11,9 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursesModule } from './components/courses/courses.module';
 import { LoginModule } from './components/login/login.module';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth. interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,10 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     CoursesModule,
     LoginModule,
+    BrowserAnimationsModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

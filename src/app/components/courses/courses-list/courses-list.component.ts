@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ICourse } from 'src/app/types/courses';
 import { CoursesService } from 'src/app/services/courses.service';
+import { delay, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-courses-list',
@@ -15,11 +16,9 @@ import { CoursesService } from 'src/app/services/courses.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursesListComponent implements OnInit {
-  public courses: ICourse[] = [];
+  public courses$: Observable<ICourse[]>;
   public loading: boolean = false;
   public searchValue: string = '';
-  public start: number = 0;
-  public amount: number = 6;
 
   constructor(private CoursesService: CoursesService) {}
 
@@ -28,18 +27,36 @@ export class CoursesListComponent implements OnInit {
   }
 
   private getCourses(): void {
-    this.CoursesService.getList(this.start, this.amount).subscribe(
-      (courses) => (this.courses = courses)
+    this.loading = true;
+    this.courses$ = this.CoursesService.getList(this.searchValue).pipe(
+      tap(() => (this.loading = false))
     );
-    console.log(this.courses);
   }
 
   public changeSearchString(inputValue: string): void {
     this.searchValue = inputValue;
+    this.getCourses();
+    console.log(this.searchValue);
+  }
+
+  public loadMoreHandler(): void {
+    this.CoursesService.loadMoreHandler();
+    this.getCourses();
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  public oneCourse(courseId: number): void {
+    let one = this.CoursesService.getItemById(courseId);
+    console.log(one);
   }
 
   public deleteCourse(courseId: number): void {
-    this.CoursesService.removeItem(courseId);
+    console.log(courseId);
+    let answ = confirm('Are you sure?');
+    if (answ)
+      this.CoursesService.removeItem(courseId).subscribe(() => {
+        this.getCourses();
+      });
     this.getCourses();
   }
 }

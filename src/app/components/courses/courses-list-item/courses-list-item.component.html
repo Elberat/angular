@@ -1,8 +1,8 @@
-<div class="item-wrapper" changeBorder [changeBorderDate]="course.creationDate" (click)="getItem(course.id)">
+<div class="item-wrapper" changeBorder [changeBorderDate]="course.date" (click)="getItem(course.id)">
     <div class="heading">
         <h2 class="course-name">
-            {{course.id}} {{course.title | uppercase}}
-            <svg [ngClass]="{'item-svg' : course.topRated}" fill="white" xmlns="http://www.w3.org/2000/svg" width="24"
+            {{course.id}}. {{course.name | uppercase}}
+            <svg [ngClass]="{'item-svg' : course.isTopRated}" fill="white" xmlns="http://www.w3.org/2000/svg" width="24"
                 height="24" viewBox="0 0 24 24">
                 <path
                     d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z" />
@@ -10,7 +10,7 @@
         </h2>
         <div class="date">
             <p>{{course.duration | duration}}</p>
-            <p>{{course.creationDate | date}}</p>
+            <p>{{course.date | date}}</p>
         </div>
     </div>
     <div class="course-bottom">
@@ -19,7 +19,7 @@
         </p>
         <div class="course-btns">
             <button class="btn" [routerLink]="['/', course.id]">Edit</button>
-            <app-delete-button [id]="course.id" (handleDeleteEvent)="handleDelete($event)"></app-delete-button>
+            <button class="btn" (click)="handleClick(course.id)">Delete</button>
         </div>
     </div>
 </div>

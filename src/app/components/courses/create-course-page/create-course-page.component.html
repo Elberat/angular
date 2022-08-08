@@ -1,26 +1,80 @@
-<div class="modal-wrapper">
-    <div class="modal-add">
-        <h3>New Course</h3>
-        <form class="add-form">
-            <label for="">Title:</label>
-            <input type="text" placeholder="Enter title" [ngModelOptions]="{standalone: true}" [(ngModel)]="
-                this.courseToEdit.title">
-            <label for="">Description:</label>
-            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.description" type="text"
-                placeholder="Enter description">
-            <label for="">Duration:</label>
-            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.duration" type="number"
-                placeholder="Minutes">
-            <label for="">Date:</label>
-            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.creationDate" type="date"
-                placeholder="date">
-            <label for="">Authors:</label>
-            <input [ngModelOptions]="{standalone: true}" [(ngModel)]=" this.courseToEdit.author" type="text"
-                placeholder="Enter Author">
-            <div class="button-wrapper">
-                <button class="cancel-button" type="button" (click)="cancel()">Cancel</button>
-                <button class="add-button" (click)="submit()" type="submit">Save</button>
-            </div>
-        </form>
-    </div>
-</div>
+<mat-card class="add-update-course-window">
+    <form class="form" [formGroup]="formGroup" novalidate (ngSubmit)="save()">
+        <mat-form-field appearance="standard">
+            <mat-label>Title:</mat-label>
+            <input matInput type="text" formControlName="name" />
+            <mat-error *ngIf="isFieldInvalid('name')">
+                <mat-error *ngIf="formGroup.get('name')?.errors?.['required']">Required field</mat-error>
+                <mat-error *ngIf="formGroup.get('name')?.errors?.['minlength']">Title should be at least 3 characters
+                    long</mat-error>
+                <mat-error *ngIf="formGroup.get('name')?.errors?.['maxlength']">Title should be no more than 50
+                    characters long</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Description:</mat-label>
+            <textarea matInput type="text" class="large description" formControlName="description"></textarea>
+            <mat-error *ngIf="isFieldInvalid('description')">
+                <mat-error *ngIf="formGroup.get('description')?.errors?.['required']">Required field</mat-error>
+                <mat-error *ngIf="formGroup.get('description')?.errors?.['maxlength']">Description should be no more
+                    than 500 characters long</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="small" appearance="standard">
+            <mat-label>Date:</mat-label>
+            <input formControlName="date" matInput [matDatepicker]="picker" />
+            <mat-error *ngIf="isFieldInvalid('date')">Required field</mat-error>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="form-label flex-gap-10">
+            <mat-form-field appearance="standard" class="small">
+                <mat-label>Duration:</mat-label>
+                <input #duration matInput type="number" formControlName="length" />
+                <mat-error *ngIf="isFieldInvalid('length')">
+                    <mat-error *ngIf="formGroup.get('length')?.errors?.['required']">Required field, only numbers
+                        allowed</mat-error>
+                </mat-error>
+            </mat-form-field>
+            <span>{{ +duration.value | duration }}</span>
+        </div>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Authors:</mat-label>
+
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let author of authorControls.controls" (removed)="removeAuthor(author.value.id)">
+                    {{ author.value.firstName + " " + author.value.lastName | titlecase }}
+                    <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </mat-chip>
+                <input type="text" matInput (blur)="checkAuthorsState(chipList)" formControlName="authorsInput"
+                    [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                    (matChipInputTokenEnd)="addAuthor($event)" />
+            </mat-chip-list>
+            <mat-error> Should be at least 1 author </mat-error>
+
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let author of authorControls.controls" [value]="
+            author.value.firstName + ' ' + author.value.lastName | titlecase
+          ">
+                    {{ author.value.firstName + " " + author.value.lastName | titlecase }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <div class="buttons">
+            <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">
+                Save
+            </button>
+            <button type="button" mat-raised-button color="warn" (click)="close()">
+                Cancel
+            </button>
+        </div>
+    </form>
+</mat-card>

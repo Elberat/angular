@@ -7,109 +7,58 @@ import { ICourse } from '../types/courses';
   providedIn: 'root',
 })
 export class CoursesService {
-  //   private coursesList: ICourse[] = [
-  //     {
-  //       id: 1,
-  //       title: 'Angular: The Complete Guide',
-  //       creationDate: new Date(2022, 7, 9),
-  //       duration: 120,
-  //       topRated: true,
-  //       description:
-  //         'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-  //       author: 'vladilen minin',
-  //     },
-  //     {
-  //       id: 2,
-  //       title: 'React: The Complete Guide',
-  //       creationDate: new Date(2022, 12, 8),
-  //       duration: 100,
-  //       topRated: true,
-  //       description:
-  //         'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-  //       author: 'vladilen minin',
-  //     },
-  //     {
-  //       id: 3,
-  //       title: 'Vue: The Complete Guide',
-  //       creationDate: new Date(2018, 7, 12),
-  //       duration: 60,
-  //       topRated: false,
-  //       description:
-  //         'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-  //       author: 'vladilen minin',
-  //     },
-  //     {
-  //       id: 4,
-  //       title: 'Angular: The Complete Guide',
-  //       creationDate: new Date(2025, 11, 23),
-  //       duration: 40,
-  //       topRated: true,
-  //       description:
-  //         'This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-  //       author: 'vladilen minin',
-  //     },
-  //     {
-  //       id: 5,
-  //       title: 'React: The Complete Guide',
-  //       creationDate: new Date(2025, 9, 9),
-  //       duration: 10,
-  //       topRated: true,
-  //       description:
-  //         'This course will teach you everything you need to know about React. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-  //       author: 'vladilen minin',
-  //     },
-  //     {
-  //       id: 6,
-  //       title: 'Vue: The Complete Guide',
-  //       creationDate: new Date(2022, 6, 6),
-  //       duration: 300,
-  //       topRated: false,
-  //       description:
-  //         'This course will teach you everything you need to know about Vue. This course will teach you everything you need to know about Angular. It will give you a solid foundation for building applications with Angular. You will learn about dependency injection, forms, routing, templates, data binding, animations, change detection, and more.',
-  //       author: 'vladilen minin',
-  //     },
-  //   ];
+  private start: number = 0;
+  private count: number = 5;
 
-  private coursesList: ICourse[] = [];
-
-  //   public getList(): ICourse[] {
-  //     return this.coursesList;
-  //   }
   constructor(private http: HttpClient) {}
 
-  public getList(start: number, count: number): Observable<ICourse[]> {
+  public getList(searchValue: string): Observable<ICourse[]> {
     return this.http.get<ICourse[]>('http://localhost:3004/courses', {
-      params: {
-        start,
-        count,
-      },
+      params: new HttpParams({
+        fromObject: {
+          start: this.start,
+          count: this.count,
+          textFragment: searchValue,
+        },
+      }),
     });
   }
 
-  public getItemById(id: number): ICourse {
-    const itemToReturn = this.coursesList.find((course) => course.id === id);
-    return itemToReturn
-      ? itemToReturn
-      : {
-          id: Date.now(),
-          title: '',
-          author: '',
-          description: '',
-          duration: 0,
-          creationDate: new Date(),
-          topRated: true,
-        };
+  public loadMoreHandler(): void {
+    this.count += 2;
   }
 
-  public removeItem(id: number): void {
-    this.coursesList = this.coursesList.filter((course) => course.id !== id);
+  public getItemById(id: number): Observable<ICourse> {
+    const url = `http://localhost:3004/courses/${id}`;
+    return this.http.get<ICourse>(url);
   }
 
-  public updateItem(item: ICourse): void {
-    // this.coursesList[item.id + 1] = item;
+  public removeItem(id: number): Observable<Object> {
+    console.log(this.http.delete(`http://localhost:3004/courses/${id}`));
+    return this.http.delete(`http://localhost:3004/courses/${id}`);
   }
 
-  public createCourse(item: ICourse): void {
-    this.coursesList.push(item);
+  public updateItem(course: ICourse): Observable<Object> {
+    const url = `http://localhost:3004/courses/${course.id}`;
+    return this.http.put(url, course);
+  }
+
+  public createItem(course: ICourse): Observable<Object> {
+    return this.http.post(`http://localhost:3004/courses/`, course);
+  }
+
+  dateFromStringToMs(dateContent: string) {
+    if (dateContent === null) {
+      return 0;
+    }
+    if (+dateContent) {
+      return dateContent;
+    } else {
+      return new Date(`
+        ${dateContent.slice(3, 5)}.
+        ${dateContent.slice(0, 2)}.
+        ${dateContent.slice(6)}
+        `).getTime();
+    }
   }
 }

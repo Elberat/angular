@@ -21,16 +21,15 @@ export class UserService implements OnInit {
     login: '',
     password: '',
   };
-  private token: string = '';
-
-  ngOnInit() {
-    this.token = this.localStorageService.getItem() ?? '';
-  }
 
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService
   ) {
+    this.fetchUser();
+  }
+
+  ngOnInit(): void {
     this.fetchUser();
   }
 
@@ -43,12 +42,13 @@ export class UserService implements OnInit {
   }
 
   public fetchUser(): void {
-    if (this.localStorageService.getItem()) {
+    if (this.localStorageService.getToken()) {
       this.http
         .post<IUser>(`http://localhost:3004/auth/userInfo`, {})
         .subscribe((user) => {
           this.user = user;
         });
     }
+    console.log(this.currentUser);
   }
 }

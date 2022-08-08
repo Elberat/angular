@@ -17,7 +17,7 @@ export class AuthenticationService {
     private router: Router,
     private http: HttpClient
   ) {
-    if (this.localStorageService.getItem()) {
+    if (this.localStorageService.getToken()) {
       this.isAuthenticated = true;
     }
   }
@@ -29,23 +29,20 @@ export class AuthenticationService {
         password,
       })
       .subscribe({
-        next: (userData) => {
-          this.localStorageService.setItem(JSON.stringify(userData));
+        next: (token) => {
+          this.localStorageService.setToken(JSON.stringify(token));
+          console.log(token);
           this.userService.fetchUser();
           this.isAuthenticated = true;
           console.log('Logged In!');
           this.router.navigate(['']);
-        },
-        error: (err) => {
-          console.error(err);
-          this.errMessage = true;
         },
       });
   }
 
   public logOut(): void {
     this.isAuthenticated = false;
-    this.localStorageService.removeItem();
+    this.localStorageService.removeToken();
     console.log('Logged Out!');
     this.router.navigate(['/login']);
   }

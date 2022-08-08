@@ -1,9 +1,11 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/services/courses.service';
-import { ICourse } from 'src/app/types/courses';
+import { ICourse, IAuthor } from 'src/app/types/courses';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent, MatChipList } from '@angular/material/chips';
 
 @Component({
   selector: 'app-create-course-page',
@@ -12,35 +14,122 @@ import { ICourse } from 'src/app/types/courses';
   providers: [DatePipe, TitleCasePipe],
 })
 export class CreateCoursePageComponent implements OnInit {
-  courseToEdit: ICourse = {
-    id: Date.now(),
-    title: '',
-    author: '',
-    description: '',
-    duration: 0,
-    creationDate: new Date(),
-    topRated: true,
-  };
+  private courseId: number;
+  public formGroup: FormGroup;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService
-  ) {}
+    private coursesService: CoursesService,
+    private datePipe: DatePipe,
+    private titleCasePipe: TitleCasePipe
+  ) {
+    this.formGroup = new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+      ]),
+      date: new FormControl('', [Validators.required]),
+      length: new FormControl(0, [
+        Validators.required,
+        Validators.pattern(/^[0-9]+$/),
+      ]),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(500),
+      ]),
+      authorsInput: new FormControl(''),
+      authors: new FormArray([], [Validators.required]),
+    });
+
+    this.courseId = +this.activatedRoute.snapshot.params['id'] || 0;
+  }
 
   ngOnInit(): void {
-    const id = +this.activatedRoute.snapshot.params['id'];
-    this.courseToEdit = this.coursesService.getItemById(id);
-    console.log(this.courseToEdit);
+    if (this.courseId) {
+      this.coursesService.getItemById(this.courseId).subscribe((course) => {
+        this.formGroup.setValue({
+          name: this.titleCasePipe.transform(course.name),
+          date: this.datePipe.transform(course.date, 'yyyy-MM-dd'),
+          length: course.length,
+          description: course.description,
+          authorsInput: '',
+          authors: [],
+        });
+        course.authors?.forEach((author) => {
+          this.authorControls.push(new FormControl(author));
+        });
+      });
+    }
   }
 
-  submit() {
-    console.log(this.courseToEdit);
-    this.coursesService.updateItem(this.courseToEdit);
+  get authorControls() {
+    return this.formGroup.get('authors') as FormArray;
+  }
 
+  private isAuthorsInvalid(): boolean {
+    return (
+      !!this.formGroup.get('authorsInput')?.touched &&
+      !!this.formGroup.get('authors')?.invalid
+    );
+  }
+
+  public checkAuthorsState(chipList: MatChipList): void {
+    this.isAuthorsInvalid()
+      ? (chipList.errorState = true)
+      : (chipList.errorState = false);
+  }
+
+  public isFieldInvalid(fieldName: string): boolean {
+    return (
+      !!this.formGroup.get(fieldName)?.invalid &&
+      !!this.formGroup.get(fieldName)?.touched
+    );
+  }
+
+  public addAuthor(event: MatChipInputEvent) {
+    if (!event.value) return;
+    const userNameArr: string[] = event.value.split(/[ ,]+/);
+    const author: IAuthor = {
+      id: Date.now(),
+      name: userNameArr[0],
+    };
+    this.authorControls.push(new FormControl(author));
+    event.chipInput!.clear();
+  }
+
+  public removeAuthor(id: number): void {
+    const controlToDelete = this.authorControls.controls.findIndex(
+      (control) => control.value.id === id
+    );
+    this.authorControls.removeAt(controlToDelete);
+  }
+
+  private returnHome(): void {
     this.router.navigate(['']);
   }
-  cancel() {
-    console.log('cancel');
-    this.router.navigate(['']);
+
+  public save(): void {
+    const { authorsInput, ...course } = this.formGroup.value;
+    if (this.courseId) {
+      this.coursesService
+        .updateItem({
+          ...course,
+          id: this.courseId,
+        })
+        .subscribe(() => this.returnHome());
+    } else {
+      this.coursesService
+        .createItem({
+          ...course,
+          id: Date.now(),
+        })
+        .subscribe(() => this.returnHome());
+    }
+  }
+  public close(): void {
+    this.returnHome();
   }
 }
