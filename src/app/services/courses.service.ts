@@ -12,8 +12,12 @@ export class CoursesService {
 
   constructor(private http: HttpClient) {}
 
-  public getList(searchValue: string): Observable<ICourse[]> {
-    return this.http.get<ICourse[]>('http://localhost:3004/courses', {
+  public getList(): Observable<ICourse[]> {
+    return this.http.get<ICourse[]>('http://localhost:3004/courses', {});
+  }
+
+  public searchCourses(searchValue: string): Observable<ICourse[]> {
+    return this.http.get<ICourse[]>(`http://localhost:3004/courses`, {
       params: new HttpParams({
         fromObject: {
           start: this.start,

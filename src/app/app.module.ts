@@ -14,6 +14,7 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth. interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LogoComponent,
     FooterComponent,
     NotFoundPageComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

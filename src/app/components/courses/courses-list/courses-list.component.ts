@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ICourse } from 'src/app/types/courses';
 import { CoursesService } from 'src/app/services/courses.service';
-import { delay, Observable, tap } from 'rxjs';
+import { delay, Observable, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-courses-list',
@@ -19,6 +19,7 @@ export class CoursesListComponent implements OnInit {
   public courses$: Observable<ICourse[]>;
   public loading: boolean = false;
   public searchValue: string = '';
+  private subscription: Subscription;
 
   constructor(private CoursesService: CoursesService) {}
 
@@ -28,7 +29,7 @@ export class CoursesListComponent implements OnInit {
 
   private getCourses(): void {
     this.loading = true;
-    this.courses$ = this.CoursesService.getList(this.searchValue).pipe(
+    this.courses$ = this.CoursesService.getList().pipe(
       tap(() => (this.loading = false))
     );
   }

@@ -7,12 +7,16 @@
                     <p class="video-course ">VIDEO COURSE</p>
                 </a>
             </div>
+            <div *ngIf="authService.userName$ | async as name">
+                <p class="welcome-msg">Welcome, {{ name }}!</p>
+            </div>
             <div class="auth-buttons-wrapper">
                 <a routerLink="/login" *ngIf="!this.authService.isAuth">
                     <p class="auth-buttons">User login</p>
                 </a>
                 <p *ngIf="this.authService.isAuth" (click)="logout()" class="auth-buttons">Log out</p>
             </div>
+
         </div>
     </div>
 </div>

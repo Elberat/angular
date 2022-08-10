@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subject, tap } from 'rxjs';
+import { ILoginReq, IUser } from '../types/user';
 import { LocalStorageService } from './localStorage.service';
 import { UserService } from './user.service';
 
@@ -8,6 +10,7 @@ import { UserService } from './user.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  public userName$: Subject<string> = new Subject<string>();
   private isAuthenticated: boolean = false;
   private errMessage: any;
 
@@ -22,22 +25,18 @@ export class AuthenticationService {
     }
   }
 
-  public logIn(login: string | undefined, password: string | undefined) {
-    this.http
-      .post(`http://localhost:3004/auth/login`, {
+  public logIn(login?: string, password?: string): Observable<ILoginReq> {
+    return this.http
+      .post<ILoginReq>(`http://localhost:3004/auth/login`, {
         login,
         password,
       })
-      .subscribe({
-        next: (token) => {
-          this.localStorageService.setToken(JSON.stringify(token));
-          console.log(token);
-          this.userService.fetchUser();
+      .pipe(
+        tap((response: any) => {
+          this.setToken(response);
           this.isAuthenticated = true;
-          console.log('Logged In!');
-          this.router.navigate(['']);
-        },
-      });
+        })
+      );
   }
 
   public logOut(): void {
@@ -53,5 +52,12 @@ export class AuthenticationService {
 
   get isErr() {
     return this.errMessage;
+  }
+  private setToken(response: ILoginReq) {
+    this.localStorageService.setToken(JSON.stringify(response));
+  }
+
+  public getUserInfo(): Observable<IUser> {
+    return this.http.post<IUser>(`http://localhost:3004/auth/userinfo`, {});
   }
 }
